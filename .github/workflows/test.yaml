@@ -1,0 +1,26 @@
+name: Testing
+
+on:
+  push:
+    branches: master
+
+jobs:
+  render:
+    name: Testing
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-pandoc@master
+      - name: Install packages
+        run: Rscript -e "install.packages('rmarkdown')"
+      - name: Run R script
+        run: Rscript main.R
+      - name: Commit results
+        run: |
+          git config user.email "junk@relund.dk"
+          git config user.name "Lars Relund"
+          git add .
+          git commit --allow-empty -am 'gHA build: ${{github.run_number}}' || echo "No changes to commit"
+          git pull --rebase
+          git push https://${{github.actor}}:${{secrets.token}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
