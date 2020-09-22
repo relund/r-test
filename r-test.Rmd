@@ -31,3 +31,8 @@ tbl1 <- tibble(name = c("Lars", "Susan", "Hans"), age = c(23, 56, 45))
 tbl1
 ```
 
+```{r}
+sessionInfo()
+```
+
+
