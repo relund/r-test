@@ -1,0 +1,33 @@
+---
+title: "Testing"
+author: "Lars Relund Nielsen"
+output: html_document
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding,
+  output_dir = "docs") })
+---
+
+```{r setup, include=FALSE}
+#' Function for loading missing packages that install them if not already installed.
+#'
+#' @param packages String vector with package names
+#'
+#' @return NULL (invisible)
+#' @export
+#'
+#' @examples loadPackages(c("MASS", "ggplot2", "tikzDevice"))
+loadPackages <- function(packages) {
+  newP <- packages[!(packages %in% installed.packages()[,"Package"])]
+  if(length(newP)) install.packages(newP, repos = "http://cran.rstudio.com/")
+  lapply(packages, library, character.only = TRUE)
+  invisible(NULL)
+}
+loadPackages(c("tidyverse"))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+tbl1 <- tibble(name = c("Lars", "Susan", "Hans"), age = c(23, 56, 45))
+tbl1
+```
+
