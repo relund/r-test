@@ -24,6 +24,7 @@ loadPackages <- function(packages) {
 }
 loadPackages(c("tidyverse"))
 knitr::opts_chunk$set(echo = TRUE)
+options(crayon.enabled = FALSE)
 ```
 
 ```{r}
